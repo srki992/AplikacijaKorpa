@@ -1,0 +1,298 @@
+﻿<Window x:Class="Aplikacija.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Aplikacija"
+        mc:Ignorable="d"
+        Title="Aplikacija" Height="Auto" Width="Auto"
+        Topmost="True" WindowStartupLocation="CenterScreen" Background="DarkCyan">
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Kupovina - korpa"                  
+                   Grid.ColumnSpan="5"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+        <TextBlock Text="Artikli:" 
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+        <TextBlock Name="txtBlockMessage"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="5"
+                   FontSize="15"
+                   FontWeight="Normal"
+                   HorizontalAlignment="Center"
+                   Margin="5,8"
+                   Padding="3"
+                   Text="{Binding Path=Message}"
+                   />
+
+
+        <ListView  Grid.Row="3" Grid.Column="0" Width="Auto" Height="auto" Margin="10" Name="lvDataBinding"
+                   ItemsSource="{Binding ListaArtikala,Mode=TwoWay}"
+                   SelectedItem="{Binding SelektovaniArtikal}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="Artikal: " />
+                        <TextBlock Text="{Binding ime}" FontWeight="Bold" />
+                        <TextBlock Text=", " />
+                        <TextBlock Text="Cena: " />
+                        <TextBlock Text="{Binding cena}" FontWeight="Bold" />
+                        <TextBlock Text=" (" />
+                        <TextBlock Text="{Binding valuta}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                        <TextBlock Text=")" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock Text="Količina:"                                  
+                   Grid.Row="2"
+                   Grid.Column="2"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+        <TextBox Name="txtKolicina"
+                 Grid.Row="3"
+                 Grid.Column="2"
+                 Margin="5,8"
+                 Padding="3"
+                 Width="150"
+                 Height="30"
+                 HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"
+                 Text="{Binding Path=txtKolicinaUnos, Mode=TwoWay}" />
+
+
+        <Button Name="btnDodajUKorpu"
+                    Content="Dodaj u korpu"
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    Width="100"
+                    Height="30"
+                    Margin="5,8"
+                    Padding="3"
+                    Command="{Binding Path=DodajUKorpuCommand}"
+                    />
+
+
+        <Button Name="btnOduzmiIzKorpe"
+                    Content="Ukloni iz korpe"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    VerticalAlignment="Bottom"
+                    Width="100"
+                    Height="30"
+                    Margin="5,8"
+                    Padding="3"
+                    Command="{Binding Path=OduzmiIzKorpeCommand}" />
+
+
+
+        <TextBlock Text="Korpa:"                                  
+                   Grid.Row="2"
+                   Grid.Column="3"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"   
+                   MinWidth="200"
+                   />
+        <ListView  Grid.Row="3" Grid.Column="3" Width="Auto" Height="Auto" Margin="10" Name="DataBinding"
+                   ItemsSource="{Binding ListaStavkiUKorpi,Mode=TwoWay}"
+                   SelectedItem="{Binding SelektovaniRedUKorpi}"
+                   >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <TextBlock Text="Artikal: " />
+                        <TextBlock Text="{Binding ime}" FontWeight="Bold" />
+                        <TextBlock Text=", " />
+                        <TextBlock Text="Cena: " />
+                        <TextBlock Text="{Binding cena}" FontWeight="Bold" />
+                        <TextBlock Text=" (" />
+                        <TextBlock Text="{Binding valuta}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                        <TextBlock Text=")" />
+                        <TextBlock Text=", " />
+                        <TextBlock Text="Količina: " />
+                        <TextBlock Text="{Binding kolicina}" FontWeight="Bold" />
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Name="Izracunaj"
+                    Content="Izracunaj cenu"
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    VerticalAlignment="Bottom"
+                    Width="100"
+                    Height="30"
+                    Margin="5,8"
+                    Padding="3"
+                    Command="{Binding Path=IzracunajCenuCommand}"
+                    />
+
+        <TextBlock Text="Puna cena(bez popusta):"                                  
+                   Grid.Row="4"
+                   Grid.Column="4"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+        <TextBlock Name="txtIznosPunaCena"
+                   Grid.Row="4"
+                   Grid.Column="5"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
+                   Margin="0,11,0,5"
+                   Padding="3"
+                   Text="{Binding Path=txtIznosPunaCena}"
+                   />
+        <!--{Binding Path=txtIznosPunaCena}-->
+        
+        <TextBlock Name="txtdolar"
+                   Grid.Row="4"
+                   Grid.Column="6"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Left"
+                   Margin="10,11,-20,5"
+                   Padding="3"
+                   Text="$"
+                   />
+
+        <TextBlock Text="Popust:"                                  
+                   Grid.Row="5"
+                   Grid.Column="4"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+        <TextBlock Name="txtPopustiIspis"
+                   Grid.Row="5"
+                   Grid.Column="5"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
+                   Margin="0,11,0,5"
+                   Padding="3"
+                   Text="{Binding Path=txtPopustiIspis}"
+                   />
+        <!--{Binding Path=txtPopustiIspis}-->
+        <TextBlock Name="txtdolardva"
+                   Grid.Row="5"
+                   Grid.Column="6"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Left"
+                   Margin="10,11,-20,5"
+                   Padding="3"
+                   Text="$"
+                   />
+
+        <TextBlock Text="Konačna cena:"                                  
+                   Grid.Row="6"
+                   Grid.Column="4"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="5,8"
+                   Padding="3"                   
+                   />
+
+        <TextBlock Name="txtKonacnaCenaIspis"
+                   Grid.Row="6"
+                   Grid.Column="5"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Right"
+                   Margin="0,11,0,5"
+                   Padding="3"
+                   Text="{Binding Path=txtKonacnaCenaIspis}"
+                   />
+        <!--{Binding Path=txtKonacnaCenaIspis}-->
+        <TextBlock Name="txtdolartri"
+                   Grid.Row="6"
+                   Grid.Column="6"
+                   FontSize="20"
+                   FontWeight="UltraBold"
+                   HorizontalAlignment="Left"
+                   Margin="10,11,-20,5"
+                   Padding="3"
+                   Text="$"
+                   />
+        <Button Name="btnZavrsiKupovinu"
+                    Content="Zavrsi kupovinu"
+                    Grid.Row="9"
+                    Grid.Column="7"
+                    VerticalAlignment="Bottom"
+                    Width="100"
+                    Height="30"
+                    Margin="5,8"
+                    Padding="3"
+                    Command="{Binding Path=ZavrsiKupovinuCommand}" />
+
+        <!--<ListView Grid.Row="3" Grid.Column="0" Margin="8" Height="Auto" Width="Auto"
+    ItemsSource="{Binding Path=ListaArtikala}" SelectedItem="{Binding IzabraniArtikal}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding ime}" 
+                  Header="Naziv artikla" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding cena}" 
+                  Header="Cena" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding valuta}" 
+                  Header="Valuta" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+    </Grid>
+</Window>
